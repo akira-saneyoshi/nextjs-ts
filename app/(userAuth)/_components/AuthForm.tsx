@@ -1,5 +1,6 @@
 'use client';
 
+import ExternalButton from '@/app/_components/button/ExternalButton';
 import ExternalTextField from '@/app/_components/textField/ExternalTextField';
 import { useCallback, useState } from 'react';
 import {
@@ -7,6 +8,7 @@ import {
   SubmitHandler,
   useForm
 } from 'react-hook-form';
+import AuthSocialButton from './AuthSocialButton';
 
 type Variant = 'LOGIN' | 'REGISTER';
 
@@ -82,13 +84,73 @@ const AuthForm = () => {
           "
           onSubmit={handleSubmit(onSubmit)}
         >
+          {variant === 'REGISTER' && (
+            <ExternalTextField
+              id="name"
+              label="Name"
+              register={register}
+              errors={errors}
+            />
+          )}
           <ExternalTextField
-            id="email"
-            label="Email"
-            register={register}
-            errors={errors}
-          />
+              id="email"
+              label="Email address"
+              type="email"
+              register={register}
+              errors={errors}
+            />
+            <ExternalTextField
+              id="password"
+              label="Password"
+              type="password"
+              register={register}
+              errors={errors}
+            />
+            <div>
+              <ExternalButton
+                disabled={isLoading}
+                fullWidth
+                type="submit"
+              >
+                {variant === 'LOGIN' ? 'Sign In' : 'Register'}
+              </ExternalButton>
+            </div>
         </form>
+        <div className="mt-6">
+          <div className="relative">
+            <div
+              className="
+                absolute
+                inset-0
+                flex
+                items-center
+              "
+            >
+              <div className="w-full border-t border-gray-300" />
+            </div>
+            <div
+              className="
+                relative
+                flex
+                justify-center
+                text-sm
+              "
+            >
+              <span
+                className="
+                  bg-white
+                  px-2
+                  text-gray-500
+                "
+              >
+                Or continue with
+              </span>
+            </div>
+          </div>
+          <div className="mt-6 flex gap-2">
+            <AuthSocialButton />
+          </div>
+        </div>
       </div>
     </div>
   );
